@@ -18,20 +18,30 @@ exports.cssLoaders = function (options) {
     const cssLoader = {
         loader: 'css-loader',
         options: {
+            // sourceMap: options.sourceMap
+            minimize: process.env.NODE_ENV === 'production',
             sourceMap: options.sourceMap
         }
     }
 
-    const postcssLoader = {
-        loader: 'postcss-loader',
+    const px2remLoader = {
+        loader: 'px2rem-loader',
         options: {
-            sourceMap: options.sourceMap
+            remUnit: 64  //1rem=多少像素 这里的设计稿是750px。
         }
     }
+
+    // const postcssLoader = {
+    //     loader: 'postcss-loader',
+    //     options: {
+    //         sourceMap: options.sourceMap
+    //     }
+    // }
 
     // generate loader string to be used with extract text plugin
     function generateLoaders(loader, loaderOptions) {
-        const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+        // const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+        const loaders = [cssLoader, px2remLoader]
 
         if (loader) {
             loaders.push({
