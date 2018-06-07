@@ -27,16 +27,16 @@ exports.cssLoaders = function (options) {
     const px2remLoader = {
         loader: 'px2rem-loader',
         options: {
-            remUnit: 64  //1rem=多少像素 这里的设计稿是750px。
+            remUnit: 37.5  //1rem=多少像素 设计稿除10。
         }
     }
 
-    // const postcssLoader = {
-    //     loader: 'postcss-loader',
-    //     options: {
-    //         sourceMap: options.sourceMap
-    //     }
-    // }
+    const postcssLoader = {
+        loader: 'postcss-loader',
+        options: {
+            sourceMap: options.sourceMap
+        }
+    }
 
     // generate loader string to be used with extract text plugin
     function generateLoaders(loader, loaderOptions) {
