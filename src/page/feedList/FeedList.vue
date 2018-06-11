@@ -1,21 +1,26 @@
 <template>
-    <div class="index-list-item">
-        <div class="news-item one-pic">
-            <div class="img">
-                <img src="https://t12.baidu.com/it/u=3339848234,1758381708&fm=173&app=25&f=JPEG?w=218&h=146&s=7542DD09AE33059CB12C6D9A0300B082" data-save="true" class="">
-            </div>
-            <div class='pic-text'>
-                <div class="title">{{title}}</div>
-                <div class='site'>{{site}}</div>
-                <div>{{$store.state.showLoading}}</div>
+    <div>
+        <div class="index-list-item">
+            <div class="news-item one-pic">
+                <div class="img">
+                    <img src="https://t12.baidu.com/it/u=3339848234,1758381708&fm=173&app=25&f=JPEG?w=218&h=146&s=7542DD09AE33059CB12C6D9A0300B082" data-save="true" class="">
+                </div>
+                <div class='pic-text'>
+                    <div class="title">{{title}}</div>
+                    <div class='site'>{{site}}</div>
+                    <div>{{$store.state.showLoading}}</div>
+                </div>
             </div>
         </div>
+        <Loading v-show="showLoading"></Loading>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     import http from '@/utils/http';
     import api from '@/utils/api';
+    import Loading from '@/components/Loading';
     export default {
         name: "FeedList",
         data() {
@@ -24,6 +29,9 @@
                 site: '央广网'
             }
         },
+        computed: mapGetters([
+            'showLoading'
+        ]),
         mounted() {
             this.fetchData();
         },
@@ -34,6 +42,9 @@
                     console.log('请求成功');
                 }
             }
+        },
+        components: {
+            Loading
         }
     }
 </script>

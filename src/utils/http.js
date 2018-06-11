@@ -2,10 +2,12 @@
 
 import axios from 'axios'
 import qs from 'qs'
+import store from '@/store'
 
 axios.interceptors.request.use(config => {
     // loading
     console.log(config);
+    store.dispatch('FETCH_LOADING', true);
     return config
 }, error => {
     return Promise.reject(error)
@@ -27,6 +29,7 @@ axios.defaults.timeout = 10000
 
 function checkStatus (response) {
     // loading
+    store.dispatch('FETCH_LOADING', false);
     // 如果http状态码正常，则直接返回数据
     if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
         return response
@@ -42,10 +45,12 @@ function checkStatus (response) {
 function checkCode (res) {
     // 如果code异常(这里已经包括网络错误，服务器错误，后端抛出的错误)，可以弹出一个错误提示，告诉用户
     if (res.status === -404) {
-        alert(res.msg)
+        // alert(res.msg)
+        console.log(res.msg);
     }
     if (res.data && (!res.data.success)) {
-        alert(res.data.error_msg)
+        // alert(res.data.error_msg)
+        console.log(res.data.error_msg);
     }
     return res
 }
